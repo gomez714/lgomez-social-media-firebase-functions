@@ -26,6 +26,10 @@ exports.getAllCrafts =  (request, response) => {
 };
 
 exports.postOneCraft = (request, response) => {
+
+    if (request.body.body.trim() === '') {
+        return response.status(400).json({ body: 'Body must not be empty' });
+    }
     
     const newCraft = {
         body: request.body.body,
@@ -55,7 +59,7 @@ exports.getCraft = (request, response) => {
     let craftData = {};
     db.doc(`/crafts/${request.params.craftId}`)
     .get()
-    .then(doc => {
+    .then( doc => {
         if(!doc.exists){
             return response.status(400),json({ error: "Craft not found"});
         }
@@ -67,7 +71,7 @@ exports.getCraft = (request, response) => {
         craftData.comments = [];
         data.forEach(doc => {
             craftData.comments.push(doc.data());
-        })
+        });
 
         return response.json(craftData);
     })
