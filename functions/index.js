@@ -2,6 +2,9 @@ const functions = require('firebase-functions');
 const app = require('express')();
 const FBAuth = require('./utility/fbauth');
 
+const cors = require('cors');
+app.use(cors());
+
 const { db } = require('./utility/admin');
 
 const { getAllCrafts, postOneCraft, getCraft, deleteCraft, commentOnCraft, likeCraft, unlikeCraft } = require('./handlers/crafts');
